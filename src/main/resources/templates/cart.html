@@ -42,7 +42,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item"><a class="nav-link" href="index.html">Acasă</a></li>
-                <li class="nav-item"><a class="nav-link" href="menu.html">Meniu</a></li>
+                <li class="nav-item"><a class="nav-link" href="../src/main/resources/templates/menu.html">Meniu</a></li>
                 <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 <li class="nav-item"><a class="nav-link active" href="cart.html">Coșul meu</a></li>
             </ul>
@@ -105,26 +105,26 @@
             </div>
             <div class="modal-body d-flex flex-column justify-content-center">
                 <div class="booking">
-                    <form class="booking-form row" role="form" action="#" method="post">
+                    <form class="booking-form row" role="form" id="orderForm">
                         <div class="col-lg-6 col-12">
                             <label for="name" class="form-label">Nume, Prenume</label>
                             <input type="text" name="name" id="name" class="form-control" placeholder="Nume, Prenume" required>
                         </div>
                         <div class="col-lg-6 col-12">
                             <label for="address" class="form-label">Adresa</label>
-                            <input type="address" name="address" id="address" class="form-control" placeholder="Adresa ta completă" required>
+                            <input type="text" name="address" id="address" class="form-control" placeholder="Adresa ta completă" required>
                         </div>
                         <div class="col-lg-6 col-12">
                             <label for="phone" class="form-label">Nr. de telefon</label>
-                            <input type="telephone" name="phone" id="phone" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" class="form-control" placeholder="023 456 789">
+                            <input type="text" name="phone" id="phone" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" class="form-control" placeholder="023 456 789">
                         </div>
                         <div class="col-lg-6 col-12">
                             <label for="scara" class="form-label">Scara</label>
-                            <input type="text" name="nombre" id="scara" class="form-control" placeholder="">
+                            <input type="text" name="scara" id="scara" class="form-control" placeholder="">
                         </div>
                         <div class="col-12">
-                            <label for="message" class="form-label">Aveți careva specificații referitor la comandă?</label>
-                            <textarea class="form-control" rows="4" id="message" name="message" placeholder=""></textarea>
+                            <label for="specificatiiComanda" class="form-label">Aveți careva specificații referitor la comandă?</label>
+                            <textarea class="form-control" rows="4" id="specificatiiComanda" name="specificatiiComanda" placeholder=""></textarea>
                         </div>
                         <div class="col-lg-4 col-12 ms-auto">
                             <button type="submit" class="form-control">Trimite</button>
@@ -136,6 +136,49 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('orderForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const order = {
+            name: document.getElementById('name').value,
+            address: document.getElementById('address').value,
+            phone: document.getElementById('phone').value,
+            scara: document.getElementById('scara').value,
+            specificatiiComanda: document.getElementById('specificatiiComanda').value
+        };
+        localStorage.setItem('order', JSON.stringify(order));
+        alert('Comanda a fost salvată local.');
+    });
+</script>
+<button id="sendOrder" class="btn btn-primary">Trimite comanda la server</button>
+
+<script>
+    document.getElementById('sendOrder').addEventListener('click', function() {
+        const order = JSON.parse(localStorage.getItem('order'));
+        if (order) {
+            fetch('/api/orders/comandaNoua', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(order)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Comanda a fost trimisă cu succes.');
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Eroare:', error);
+                    alert('A apărut o eroare la trimiterea comenzii.');
+                });
+        } else {
+            alert('Nu există nicio comandă salvată local.');
+        }
+    });
+</script>
+
 
 <!-- JAVASCRIPT FILES -->
 <script src="js/jquery.min.js"></script>

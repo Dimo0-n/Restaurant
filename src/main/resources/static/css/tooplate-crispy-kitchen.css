@@ -899,7 +899,7 @@ strong {
   transform: scale(1.05); /* Scalare ușoară la hover */
 }
 
-/* Note that you only needs to edit the config to customize the button! */
+/* Note that you only needs to edit the com.errors.config to customize the button! */
 
 .plusButton {
   /* Config start */

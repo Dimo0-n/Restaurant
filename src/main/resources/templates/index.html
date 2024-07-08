@@ -466,12 +466,12 @@
 
                     <div class="modal-body d-flex flex-column justify-content-center">
                         <div class="booking">
-                            
-                            <form class="booking-form row" role="form" action="#" method="post">
-                                <div class="col-lg-6 col-12">
-                                    <label for="name" class="form-label">Nume, Prenume</label>
 
-                                    <input type="text" name="name" id="name" class="form-control" placeholder="Nume, Prenume" required>
+                            <form class="booking-form row" role="form" action="/submitOrder" method="post">
+                                <div class="col-lg-6 col-12">
+                                    <label for="fullName" class="form-label">Nume, Prenume</label>
+
+                                    <input type="text" name="name" id="fullName" class="form-control" placeholder="Nume, Prenume" required>
                                 </div>
 
                                 <div class="col-lg-6 col-12">
@@ -506,9 +506,9 @@
                     </div>
 
                     <div class="modal-footer"></div>
-                    
+
                 </div>
-                
+
             </div>
         </div>
 

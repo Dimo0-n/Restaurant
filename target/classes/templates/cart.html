@@ -151,34 +151,6 @@
         alert('Comanda a fost salvată local.');
     });
 </script>
-<button id="sendOrder" class="btn btn-primary">Trimite comanda la server</button>
-
-<script>
-    document.getElementById('sendOrder').addEventListener('click', function() {
-        const order = JSON.parse(localStorage.getItem('order'));
-        if (order) {
-            fetch('/api/orders/comandaNoua', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(order)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    alert('Comanda a fost trimisă cu succes.');
-                    console.log(data);
-                })
-                .catch(error => {
-                    console.error('Eroare:', error);
-                    alert('A apărut o eroare la trimiterea comenzii.');
-                });
-        } else {
-            alert('Nu există nicio comandă salvată local.');
-        }
-    });
-</script>
-
 
 <!-- JAVASCRIPT FILES -->
 <script src="js/jquery.min.js"></script>

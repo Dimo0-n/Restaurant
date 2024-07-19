@@ -58,6 +58,10 @@
                         <li class="nav-item">
                             <a class="nav-link" href="cart">Coșul meu</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="login">Login</a>
+                        </li>
                     </ul>
                 </div>
 
@@ -499,7 +503,7 @@
                                 </div>
 
                                 <div class="col-lg-4 col-12 ms-auto">
-                                    <button type="submit" class="form-control">Trimite</button>
+                                    <button type="submit" class="form-control" onclick="redirectToPage()">Trimite</button>
                                 </div>
                             </form>
                         </div>
@@ -511,6 +515,12 @@
 
             </div>
         </div>
+
+        <script>
+            function redirectToPage() {
+                window.location.href = "index.html"; // înlocuiește cu URL-ul paginii dorite
+            }
+        </script>
 
         <!-- JAVASCRIPT FILES -->
         <script src="js/jquery.min.js"></script>

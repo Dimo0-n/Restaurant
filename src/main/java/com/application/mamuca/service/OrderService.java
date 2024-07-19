@@ -11,8 +11,8 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public Order newOrder(String fullname, String address, String phone, String scara, String message) {
-        Order order = new Order(fullname, address, phone, scara, message);
+    public Order newOrder(Order order) {
+        order.setOrderId(1);
         return orderRepository.save(order);
     }
 

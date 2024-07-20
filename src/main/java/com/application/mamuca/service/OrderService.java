@@ -12,7 +12,6 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     public Order newOrder(Order order) {
-        order.setOrderId(1);
         return orderRepository.save(order);
     }
 

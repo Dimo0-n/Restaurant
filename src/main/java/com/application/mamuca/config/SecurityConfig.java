@@ -33,7 +33,7 @@ public class SecurityConfig {
                                 .requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**", "/video/**").permitAll()
                                 .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/submitOrder").permitAll()
-                                .requestMatchers("/index").permitAll()
+                                .requestMatchers("/index", "/**").permitAll()
                                 .requestMatchers("/users").hasRole("ADMIN")
                 ).formLogin(
                         form -> form

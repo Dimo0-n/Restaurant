@@ -56,9 +56,22 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public boolean authenticate(String email, String password) {
+        return false;
+    }
+
     private UserDto mapToIserDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setEmail(user.getEmail());
         return userDto;
     }
+
+//    public boolean authenticate(String email, String password) {
+//        User user = userRepository.findByEmail(email);
+//        if (passwordEncoder.matches(password, user.getPassword())) {
+//            return user;
+//        }
+//        return null;
+//    }
 }

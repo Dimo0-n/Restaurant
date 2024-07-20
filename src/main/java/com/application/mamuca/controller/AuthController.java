@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-
 @Controller
 public class AuthController {
+
+    private HomeController homeController;
 
     private UserService userService;
 
@@ -45,11 +45,21 @@ public class AuthController {
         return "registredSuccess";
     }
 
-    @GetMapping("/users")
-    public String users(Model model) {
-        List<UserDto> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        return "users";
+    public String logation(@Valid @ModelAttribute("user") UserDto userDto,
+                           BindingResult result,
+                           Model model) {
+
+        if (userService.authenticate(userDto.getEmail(), userDto.getPassword()))
+            return homeController.home();
+
+        return null;
     }
+
+//    @GetMapping("/users")
+//    public String users(Model model) {
+//        List<UserDto> users = userService.findAllUsers();
+//        model.addAttribute("users", users);
+//        return "users";
+//    }
 
 }

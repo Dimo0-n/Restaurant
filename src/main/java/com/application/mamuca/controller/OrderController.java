@@ -18,6 +18,8 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    private HomeController homeController;
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/submitOrder", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String submitOrder(@RequestParam MultiValueMap<String, String> formParams) {
@@ -32,7 +34,7 @@ public class OrderController {
 
         orderService.newOrder(order);
 
-        return "index";
+        return homeController.home();
     }
 
 //    @ResponseStatus(HttpStatus.CREATED)

@@ -19,10 +19,11 @@
 
             <form class="login" th:action="@{/register/save}">
 
-                <button class="button login__submit">
-                    <span><a th:href="@{/index}">Continue</a></span>
+                <a class="button login__submit" th:href="@{/index}">
+                    <span>Continue</span>
                     <i class="button__icon fas fa-chevron-right"></i>
-                </button>
+                </a>
+
                 <br>
             </form>
             <div class="social-login">

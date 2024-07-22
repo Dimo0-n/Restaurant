@@ -1,6 +1,8 @@
 package com.application.mamuca.config;
 
 import com.application.mamuca.security.CustomUserDetailsService;
+import com.application.mamuca.service.UserService;
+import com.application.mamuca.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -33,13 +36,15 @@ public class SecurityConfig {
                                 .requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**", "/video/**").permitAll()
                                 .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/submitOrder").permitAll()
-                                .requestMatchers("/index", "/**").permitAll()
+                                .requestMatchers("/index").permitAll()
                                 .requestMatchers("/users").hasRole("ADMIN")
+                                .requestMatchers("/login").permitAll().anyRequest().authenticated()
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
-                                .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/index")
+                                .loginProcessingUrl("/login/verification")
+                                .defaultSuccessUrl("/index", true)
+                                .failureUrl("/login?error=true")
                                 .permitAll()
                 ).logout(
                         logout -> logout
@@ -55,4 +60,5 @@ public class SecurityConfig {
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
+
 }

@@ -1,24 +1,19 @@
 package com.application.mamuca.controller;
 
-import ch.qos.logback.core.model.Model;
 import com.application.mamuca.entity.Order;
-import com.application.mamuca.service.OrderService;
+import com.application.mamuca.service.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RestController
 public class OrderController {
 
     @Autowired
-    private OrderService orderService;
-
-    private HomeController homeController;
+    private OrderServiceImpl orderService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/submitOrder", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -34,14 +29,7 @@ public class OrderController {
 
         orderService.newOrder(order);
 
-        return homeController.home();
+        return "/index";
     }
-
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping(value = "/submitOrder", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-//    public ResponseEntity<String> submitOrder(@RequestParam MultiValueMap<String, String> formParams) {
-//
-//        return ResponseEntity.ok("Order submitted successfully");
-//    }
 
 }

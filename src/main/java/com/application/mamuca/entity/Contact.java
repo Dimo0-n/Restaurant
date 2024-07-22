@@ -1,14 +1,16 @@
 package com.application.mamuca.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-@Table(name = "orders")
-public class Order {
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "contact")
+public class Contact {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,11 +18,9 @@ public class Order {
 
     private String fullName;
 
-    private String address;
-
-    private String scara;
-
     private String phone;
+
+    private String email;
 
     private String message;
 

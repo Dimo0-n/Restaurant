@@ -5,10 +5,14 @@ import com.application.mamuca.entity.Role;
 import com.application.mamuca.entity.User;
 import com.application.mamuca.repository.RoleRepository;
 import com.application.mamuca.repository.UserRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +33,10 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public boolean checkPassword(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
     @Override
@@ -57,8 +65,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean authenticate(String email, String password) {
-        return false;
+    public UserDto getUserByEmail(String email) {
+
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException(email);
+        }
+
+        UserDto returnUserDto = new UserDto();
+        BeanUtils.copyProperties(user, returnUserDto);
+
+        return new UserDto();
     }
 
     private UserDto mapToIserDto(User user) {
@@ -67,11 +84,20 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
-//    public boolean authenticate(String email, String password) {
-//        User user = userRepository.findByEmail(email);
-//        if (passwordEncoder.matches(password, user.getPassword())) {
-//            return user;
-//        }
-//        return null;
-//    }
+    @Override
+    public boolean authentication(String email, String password) throws UsernameNotFoundException {
+        return true;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException(email);
+        }
+
+        return new org.springframework.security.core.userdetails.User(user.getPassword(),
+                user.getPassword(), new ArrayList<>());
+    }
 }

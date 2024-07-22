@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - A Pen by Mohithpoojary</title>
+  <title>Login</title>
   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'><link rel="stylesheet" th:href="@{/css/loginStyle.css}">
 
@@ -12,15 +12,15 @@
 <div class="container">
 	<div class="screen">
 		<div class="screen__content">
-			<form class="login" method="post" th:action="@{/login}">
+			<form class="login" method="post" th:action="@{/login/verification}">
 
 				<div class="login__field">
 					<i class="login__icon fas fa-user"></i>
-					<input type="text" id="email" class="login__input" placeholder="Email">
+					<input type="email" name="username" class="login__input" placeholder="Email">
 				</div>
 				<div class="login__field">
 					<i class="login__icon fas fa-lock"></i>
-					<input type="password" id="password" class="login__input" placeholder="Password">
+					<input type="password" name="password" class="login__input" placeholder="Password">
 				</div>
 				<button class="button login__submit">
 					<span class="button__text">Log In Now</span>
@@ -28,6 +28,14 @@
 				</button>
 				<br>
 				<span>Not registered? <a th:href="@{/register}">Register/SignUp Here</a></span>
+
+				<div th:if="${error != null}">
+					<p th:text="${error}"></p>
+				</div>
+
+				<div th:if="${message != null}">
+					<p th:text="${message}"></p>
+				</div>
 			</form>
 			<div class="social-login">
 				<br>
